@@ -22,12 +22,7 @@ export async function GET() {
       }
     }
 
-    // Ensure it's a valid object, not an array or string
-    if (!contentObj || typeof contentObj !== "object" || Array.isArray(contentObj)) {
-      contentObj = {};
-    }
-
-    return NextResponse.json(contentObj);
+    return NextResponse.json(contentObj || {});
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
