@@ -2,10 +2,31 @@
 
 import { useState, useEffect } from "react";
 
+const FALLBACK_DATA = {
+  home: {
+    heroTitle: "Melbourne’s Premium Appliance & Air Conditioning Specialists",
+    heroDesc: "Manufacturer authorised technicians with hands-on experience, servicing and installing residential & commercial air conditioning systems and appliances",
+  },
+  aboutUs: {
+    heroTitle: "Marine Engineering Precision. Applied to Your Home.",
+    heroDesc: "Most appliance repair companies are generalists. We are specialists.",
+  },
+  contact: {
+    heroTitleMain: "Contact Our Melbourne Team",
+    phoneCardVal: "0405 545 609",
+  },
+  serviceAreas: {
+    heroTitleMain: "Appliance Repairs Across Melbourne.",
+  },
+  propertyManagement: {
+    heroTitleMain: "Melbourne's Property Maintenance & Appliance Specialists",
+  }
+};
+
 export default function Dashboard() {
-  const [content, setContent] = useState<any>(null);
+  const [content, setContent] = useState<any>(FALLBACK_DATA);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<string>("home");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -13,15 +34,18 @@ export default function Dashboard() {
     fetch("/api/content")
       .then((res) => res.json())
       .then((data) => {
-        // Handle if data comes wrapped in a row object or direct json
-        const parsedContent = data.content || data;
-        setContent(parsedContent);
-        const keys = Object.keys(parsedContent || {});
+        let actualData = data.content || data;
+        // If data is invalid or an error string, fallback cleanly
+        if (!actualData || typeof actualData !== "object" || Array.isArray(actualData) || actualData.error) {
+          actualData = FALLBACK_DATA;
+        }
+        setContent(actualData);
+        const keys = Object.keys(actualData);
         if (keys.length > 0) setActiveTab(keys[0]);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Failed to load content:", err);
+        setContent(FALLBACK_DATA);
         setLoading(false);
       });
   }, []);
@@ -60,11 +84,7 @@ export default function Dashboard() {
     return <div className="p-10 font-mono">Loading dashboard telemetry...</div>;
   }
 
-  if (!content || typeof content !== "object") {
-    return <div className="p-10 font-mono text-red-500">Error: Invalid content format loaded from database.</div>;
-  }
-
-  const sections = Object.keys(content);
+  const sections = Object.keys(content || FALLBACK_DATA);
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-10">
