@@ -1,64 +1,30 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
-
-const FALLBACK_DATA = {
-  home: {
-    heroTitle: "Melbourne’s Premium Appliance & Air Conditioning Specialists",
-    heroDesc: "Manufacturer authorised technicians with hands-on experience",
-  },
-  aboutUs: {
-    heroTitle: "Marine Engineering Precision. Applied to Your Home.",
-  },
-  contact: {
-    heroTitleMain: "Contact Our Melbourne Team",
-  },
-  serviceAreas: {
-    heroTitleMain: "Appliance Repairs Across Melbourne.",
-  },
-  propertyManagement: {
-    heroTitleMain: "Melbourne's Property Maintenance Specialists",
-  }
-};
 
 export default function Dashboard() {
-  const [content, setContent] = useState<any>(FALLBACK_DATA);
+  const [content, setContent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<string>("home");
+  const [activeTab, setActiveTab] = useState<string>("");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    async function loadData() {
-      try {
-        const { data, error } = await supabase
-          .from("site_content")
-          .select("*")
-          .limit(1)
-          .single();
-
-        if (error || !data) {
-          throw error || new Error("No data");
-        }
-
-        let parsed = data.content;
-        if (typeof parsed === "string") {
-          parsed = JSON.parse(parsed);
-        }
-
-        if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+    fetch("/api/content")
+      .then((res) => res.json())
+      .then((data) => {
+        const parsed = data.content || data;
+        if (parsed && typeof parsed === "object") {
           setContent(parsed);
           const keys = Object.keys(parsed);
           if (keys.length > 0) setActiveTab(keys[0]);
         }
-      } catch (err) {
-        console.error("Using fallback data due to fetch error:", err);
-      }
-      setLoading(false);
-    }
-
-    loadData();
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
 
   const handleChange = (key: string, value: string) => {
@@ -75,24 +41,17 @@ export default function Dashboard() {
     setSaving(true);
     setMessage("");
     try {
-      const { data: allRows } = await supabase.from("site_content").select("id").limit(1);
-      
-      if (allRows && allRows.length > 0) {
-        const { error } = await supabase
-          .from("site_content")
-          .update({ content: content })
-          .eq("id", allRows[0].id);
-
-        if (error) throw error;
+      const res = await fetch("/api/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(content),
+      });
+      const result = await res.json();
+      if (res.ok) {
+        setMessage("Successfully pushed to live!");
       } else {
-        const { error } = await supabase
-          .from("site_content")
-          .insert([{ content: content }]);
-
-        if (error) throw error;
+        setMessage("Error saving: " + (result.error || "Unknown error"));
       }
-
-      setMessage("Successfully pushed to live!");
     } catch (err: any) {
       setMessage("Error saving: " + err.message);
     }
@@ -103,7 +62,11 @@ export default function Dashboard() {
     return <div className="p-10 font-mono">Loading dashboard telemetry...</div>;
   }
 
-  const sections = Object.keys(content || FALLBACK_DATA);
+  if (!content || typeof content !== "object") {
+    return <div className="p-10 font-mono text-red-500">Error loading content structure.</div>;
+  }
+
+  const sections = Object.keys(content);
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-10">
