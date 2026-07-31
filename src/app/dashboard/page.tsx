@@ -2,31 +2,10 @@
 
 import { useState, useEffect } from "react";
 
-const FALLBACK_DATA = {
-  home: {
-    heroTitle: "Melbourne’s Premium Appliance & Air Conditioning Specialists",
-    heroDesc: "Manufacturer authorised technicians with hands-on experience, servicing and installing residential & commercial air conditioning systems and appliances",
-  },
-  aboutUs: {
-    heroTitle: "Marine Engineering Precision. Applied to Your Home.",
-    heroDesc: "Most appliance repair companies are generalists. We are specialists.",
-  },
-  contact: {
-    heroTitleMain: "Contact Our Melbourne Team",
-    phoneCardVal: "0405 545 609",
-  },
-  serviceAreas: {
-    heroTitleMain: "Appliance Repairs Across Melbourne.",
-  },
-  propertyManagement: {
-    heroTitleMain: "Melbourne's Property Maintenance & Appliance Specialists",
-  }
-};
-
 export default function Dashboard() {
-  const [content, setContent] = useState<any>(FALLBACK_DATA);
+  const [content, setContent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<string>("home");
+  const [activeTab, setActiveTab] = useState<string>("");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -34,18 +13,14 @@ export default function Dashboard() {
     fetch("/api/content")
       .then((res) => res.json())
       .then((data) => {
-        let actualData = data.content || data;
-        // If data is invalid or an error string, fallback cleanly
-        if (!actualData || typeof actualData !== "object" || Array.isArray(actualData) || actualData.error) {
-          actualData = FALLBACK_DATA;
-        }
+        const actualData = data.content || data;
         setContent(actualData);
-        const keys = Object.keys(actualData);
+        const keys = Object.keys(actualData || {});
         if (keys.length > 0) setActiveTab(keys[0]);
         setLoading(false);
       })
       .catch((err) => {
-        setContent(FALLBACK_DATA);
+        console.error(err);
         setLoading(false);
       });
   }, []);
@@ -84,7 +59,11 @@ export default function Dashboard() {
     return <div className="p-10 font-mono">Loading dashboard telemetry...</div>;
   }
 
-  const sections = Object.keys(content || FALLBACK_DATA);
+  if (!content || typeof content !== "object") {
+    return <div className="p-10 font-mono text-red-500">Error loading content structure.</div>;
+  }
+
+  const sections = Object.keys(content);
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-10">
@@ -136,7 +115,7 @@ export default function Dashboard() {
                     {fieldKey}
                   </label>
                   <textarea
-                    value={fieldValue as string}
+                    value={(fieldValue as string) || ""}
                     onChange={(e) => handleChange(fieldKey, e.target.value)}
                     rows={2}
                     className="w-full p-3 bg-white border border-gray-300 rounded-md text-gray-800 text-sm focus:ring-2 focus:ring-black focus:outline-none"
