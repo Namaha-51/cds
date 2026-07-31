@@ -4,111 +4,128 @@ import { useState, useEffect } from "react";
 
 export default function Dashboard() {
   const [content, setContent] = useState<any>(null);
-const [activeTab, setActiveTab] = useState("");
-  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<string>("");
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
 
-  // Load the content when the dashboard opens
-// Load the content when the dashboard opens
-useEffect(() => {
-  fetch("/api/content")
-    .then((res) => res.json())
-    .then((data) => {
-      setContent(data);
-      setActiveTab(Object.keys(data)[0]); // Automatically picks the first page in your JSON!
-    });
-}, []);
+  useEffect(() => {
+    fetch("/api/content")
+      .then((res) => res.json())
+      .then((data) => {
+        // Handle if data comes wrapped in a row object or direct json
+        const parsedContent = data.content || data;
+        setContent(parsedContent);
+        const keys = Object.keys(parsedContent || {});
+        if (keys.length > 0) setActiveTab(keys[0]);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load content:", err);
+        setLoading(false);
+      });
+  }, []);
 
-  // Save changes back to the JSON file
-  const handleSave = async () => {
-    setStatus("Saving...");
-    const res = await fetch("/api/content", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(content),
-    });
-    
-    if (res.ok) {
-      setStatus("Saved successfully! Changes are live.");
-      setTimeout(() => setStatus(""), 3000);
-    } else {
-      setStatus("Error saving.");
-    }
-  };
-
-  const handleInputChange = (page: string, field: string, value: any) => {
+  const handleChange = (key: string, value: string) => {
     setContent((prev: any) => ({
       ...prev,
-      [page]: {
-        ...prev[page],
-        [field]: value,
+      [activeTab]: {
+        ...prev[activeTab],
+        [key]: value,
       },
     }));
   };
 
-  if (!content) return <div className="p-10 text-center font-bold text-xl">Loading Dashboard...</div>;
+  const handleSave = async () => {
+    setSaving(true);
+    setMessage("");
+    try {
+      const res = await fetch("/api/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(content),
+      });
+      if (res.ok) {
+        setMessage("Successfully pushed to live!");
+      } else {
+        setMessage("Error saving changes.");
+      }
+    } catch (err) {
+      setMessage("Error saving changes.");
+    }
+    setSaving(false);
+  };
+
+  if (loading) {
+    return <div className="p-10 font-mono">Loading dashboard telemetry...</div>;
+  }
+
+  if (!content || typeof content !== "object") {
+    return <div className="p-10 font-mono text-red-500">Error: Invalid content format loaded from database.</div>;
+  }
+
+  const sections = Object.keys(content);
 
   return (
-    <div className="min-h-screen p-10 bg-gray-100 text-gray-900">
-      <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200">
-        
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8 pb-4 border-b">
-          <h1 className="text-3xl font-extrabold tracking-tight">Content Dashboard</h1>
-          <button
-            onClick={handleSave}
-            className="bg-black text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-800 transition-colors"
-          >
-            Push to Live
-          </button>
-        </div>
-        
-        {status && <div className="mb-6 text-green-700 font-bold bg-green-100 p-3 rounded">{status}</div>}
-
-        {/* 5-Page Tabs */}
-        <div className="flex gap-2 border-b pb-4 mb-8 overflow-x-auto">
-          {Object.keys(content).map((page) => (
+    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
+      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 pb-6 border-b border-gray-100">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Content Dashboard</h1>
+            <p className="text-sm text-gray-500 mt-1">Manage live website copy stored in Supabase</p>
+          </div>
+          <div className="flex items-center gap-4">
+            {message && <span className="text-sm font-medium text-green-600">{message}</span>}
             <button
-              key={page}
-              onClick={() => setActiveTab(page)}
-              className={`px-5 py-2 uppercase tracking-wide text-sm font-bold rounded-lg transition-colors ${
-                activeTab === page ? "bg-black text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+              onClick={handleSave}
+              disabled={saving}
+              className="bg-black text-white px-5 py-2.5 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:opacity-50"
+            >
+              {saving ? "Pushing..." : "Push to Live"}
+            </button>
+          </div>
+        </div>
+
+        {/* Section Navigation Tabs */}
+        <div className="flex flex-wrap gap-2 mb-8 pb-4 border-b border-gray-100">
+          {sections.map((sectionKey) => (
+            <button
+              key={sectionKey}
+              onClick={() => setActiveTab(sectionKey)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeTab === sectionKey
+                  ? "bg-black text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
-              {page}
+              {sectionKey.toUpperCase()}
             </button>
           ))}
         </div>
 
-        {/* Editor Form for the Active Tab */}
-        <div className="space-y-6">
-         {content[activeTab] && Object.keys(content[activeTab]).map((field) => (
-            <div key={field} className="flex flex-col bg-gray-50 p-4 rounded-lg border border-gray-100">
-              <label className="mb-3 font-bold uppercase text-xs tracking-wider text-gray-600">
-                [ {activeTab} ] - {field.replace(/([A-Z])/g, ' $1').trim()}
-              </label>
-              
-              {typeof content[activeTab][field] === "boolean" ? (
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={content[activeTab][field]}
-                    onChange={(e) => handleInputChange(activeTab, field, e.target.checked)}
-                    className="w-6 h-6 cursor-pointer accent-black"
+        {/* Fields Editor */}
+        {activeTab && content[activeTab] && (
+          <div className="space-y-6">
+            <h2 className="text-lg font-semibold text-gray-800 capitalize border-b pb-2">
+              Section: {activeTab}
+            </h2>
+            <div className="grid grid-cols-1 gap-6">
+              {Object.entries(content[activeTab]).map(([fieldKey, fieldValue]) => (
+                <div key={fieldKey} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <label className="block text-xs font-mono font-semibold text-gray-500 uppercase mb-2">
+                    {fieldKey}
+                  </label>
+                  <textarea
+                    value={fieldValue as string}
+                    onChange={(e) => handleChange(fieldKey, e.target.value)}
+                    rows={2}
+                    className="w-full p-3 bg-white border border-gray-300 rounded-md text-gray-800 text-sm focus:ring-2 focus:ring-black focus:outline-none"
                   />
-                  <span className="ml-3 font-medium text-sm text-gray-700">Enable/Disable this section</span>
                 </div>
-              ) : (
-                <textarea
-                  value={content[activeTab][field]}
-                  onChange={(e) => handleInputChange(activeTab, field, e.target.value)}
-                  className="border border-gray-300 rounded-md p-4 w-full focus:ring-2 focus:ring-black focus:outline-none transition-shadow"
-                  rows={3}
-                />
-              )}
+              ))}
             </div>
-          ))}
-        </div>
-        
+          </div>
+        )}
       </div>
     </div>
   );
