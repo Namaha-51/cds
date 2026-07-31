@@ -5,24 +5,30 @@ export async function GET() {
   try {
     const { data, error } = await supabase
       .from("site_content")
-      .select("*")
-      .limit(1)
-      .single();
+      .select("*");
 
     if (error || !data) {
       return NextResponse.json({ error: error?.message || "No data found" }, { status: 500 });
     }
 
-    let contentObj = data.content;
-    if (typeof contentObj === "string") {
-      try {
-        contentObj = JSON.parse(contentObj);
-      } catch (e) {
-        contentObj = {};
+    // Transform rows into a single combined object: { home: {...}, aboutUs: {...}, ... }
+    const combined: Record<string, any> = {};
+    for (const row of data) {
+      let contentObj = row.content;
+      if (typeof contentObj === "string") {
+        try { contentObj = JSON.parse(contentObj); } catch (e) {}
+      }
+      // If row content contains nested keys like {"home": {...}}, unwrap it, otherwise use the section column name as key
+      if (contentObj && typeof contentObj === "object" && !Array.isArray(contentObj)) {
+        if (contentObj[row.section]) {
+          combined[row.section] = contentObj[row.section];
+        } else {
+          combined[row.section] = contentObj;
+        }
       }
     }
 
-    return NextResponse.json(contentObj || {});
+    return NextResponse.json(combined);
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
@@ -32,21 +38,12 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const { data: allRows } = await supabase.from("site_content").select("id").limit(1);
-    
-    if (allRows && allRows.length > 0) {
-      const { error } = await supabase
+    // Loop through each section and update its respective row in Supabase
+    for (const [sectionKey, sectionData] of Object.entries(body)) {
+      await supabase
         .from("site_content")
-        .update({ content: body })
-        .eq("id", allRows[0].id);
-
-      if (error) throw error;
-    } else {
-      const { error } = await supabase
-        .from("site_content")
-        .insert([{ content: body }]);
-
-      if (error) throw error;
+        .update({ content: sectionData })
+        .eq("section", sectionKey);
     }
 
     return NextResponse.json({ success: true });
