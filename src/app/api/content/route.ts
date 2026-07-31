@@ -3,31 +3,19 @@ import { supabase } from "@/lib/supabase";
 
 export async function GET() {
   try {
-    // 1. Fetch all rows from the database
     const { data, error } = await supabase.from("site_content").select("section, content");
-
     if (error) throw error;
 
-    // 2. Combine them into one object for your dashboard tabs
-    const combinedContent: Record<string, any> = {};
-    
-    if (data) {
+    const combined: Record<string, any> = {};
+    if (data && data.length > 0) {
       data.forEach((row) => {
-        let parsed = row.content;
-        if (typeof parsed === 'string') {
-          try { parsed = JSON.parse(parsed); } catch (e) {}
-        }
-        
-        // Handle if the data got double-nested previously
-        if (parsed && parsed[row.section]) {
-          combinedContent[row.section] = parsed[row.section];
-        } else {
-          combinedContent[row.section] = parsed || {};
+        if (row.section && row.content) {
+          combined[row.section] = row.content;
         }
       });
     }
 
-    return NextResponse.json(combinedContent);
+    return NextResponse.json(combined);
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
@@ -35,31 +23,28 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json(); // The full object from your dashboard
+    const body = await request.json();
 
-    // Loop through each tab (home, aboutUs, etc.) and save it properly
+    // Loop through every tab ("home", "aboutUs") and save it to its own row
     for (const [sectionName, sectionData] of Object.entries(body)) {
       
-      // Check if the row exists
       const { data: existingRow } = await supabase
         .from("site_content")
         .select("section")
         .eq("section", sectionName)
-        .single();
+        .maybeSingle();
 
       if (existingRow) {
         // Update existing row
-        const { error } = await supabase
+        await supabase
           .from("site_content")
           .update({ content: sectionData })
           .eq("section", sectionName);
-        if (error) throw error;
       } else {
-        // Insert new row WITH the required 'section' column
-        const { error } = await supabase
+        // Insert new row WITH the required 'section' name
+        await supabase
           .from("site_content")
           .insert([{ section: sectionName, content: sectionData }]);
-        if (error) throw error;
       }
     }
 
