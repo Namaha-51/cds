@@ -491,7 +491,7 @@ export default function ContactSection() {
 
     // 2. Instantly fetch the live Supabase data on page load
     useEffect(() => {
-        fetch("/api/content")
+  fetch("/api/content", { cache: "no-store" })
             .then(res => res.json())
             .then(data => {
                 if (data && !data.error && Object.keys(data).length > 0) {
