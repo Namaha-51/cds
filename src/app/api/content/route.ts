@@ -9,21 +9,25 @@ export async function GET() {
       .limit(1)
       .single();
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error || !data) {
+      return NextResponse.json({ error: error?.message || "No data found" }, { status: 500 });
     }
 
-    // Ensure we send back the json content object properly
     let contentObj = data.content;
     if (typeof contentObj === "string") {
       try {
         contentObj = JSON.parse(contentObj);
       } catch (e) {
-        // Fallback if parsing fails
+        contentObj = {};
       }
     }
 
-    return NextResponse.json(contentObj || data);
+    // Ensure it's a valid object, not an array or string
+    if (!contentObj || typeof contentObj !== "object" || Array.isArray(contentObj)) {
+      contentObj = {};
+    }
+
+    return NextResponse.json(contentObj);
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
@@ -33,21 +37,21 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Update the row in Supabase
-    const { error } = await supabase
-      .from("site_content")
-      .update({ content: body })
-      .eq("id", 1); // Adjust if your row ID is different, or omit eq if there's only one row
+    const { data: allRows } = await supabase.from("site_content").select("id").limit(1);
+    
+    if (allRows && allRows.length > 0) {
+      const { error } = await supabase
+        .from("site_content")
+        .update({ content: body })
+        .eq("id", allRows[0].id);
 
-    if (error) {
-      // If update fails by ID, try updating the first row found
-      const { data: allRows } = await supabase.from("site_content").select("id").limit(1);
-      if (allRows && allRows.length > 0) {
-        await supabase
-          .from("site_content")
-          .update({ content: body })
-          .eq("id", allRows[0].id);
-      }
+      if (error) throw error;
+    } else {
+      const { error } = await supabase
+        .from("site_content")
+        .insert([{ content: body }]);
+
+      if (error) throw error;
     }
 
     return NextResponse.json({ success: true });
