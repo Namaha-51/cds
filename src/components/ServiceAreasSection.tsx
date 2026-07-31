@@ -1,5 +1,5 @@
 "use client";
-
+import contentData from '../../data/content.json';
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, type Easing } from "framer-motion";
@@ -12,8 +12,6 @@ import {
     CheckCircle2,
     Search,
     Navigation,
-    Award,
-    ArrowRight,
     Gauge
 } from "lucide-react";
 
@@ -116,24 +114,24 @@ export default function ServiceAreasSection() {
                             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-slate-300 rounded-full shadow-2xs">
                                 <Navigation className="w-3.5 h-3.5 text-[#0284C7]" />
                                 <span className="text-xs font-mono font-bold tracking-widest text-[#0B1E36] uppercase">
-                                    GREATER MELBOURNE COVERAGE DIRECTORY
+                                    {contentData.serviceAreas.heroBadge}
                                 </span>
                             </div>
 
                             {/* Headline with Solid Light Highlight */}
                             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#0B1E36] uppercase font-sans leading-[1.1]">
-                                Appliance Repairs Across{" "}
+                                {contentData.serviceAreas.heroTitleMain}{" "}
                                 <span className="inline-block bg-[#A3E635] text-[#0F172A] px-3 py-1 font-black rounded-xs shadow-2xs">
-                                    Melbourne.
+                                    {contentData.serviceAreas.heroTitleHighlight}
                                 </span>
                             </h1>
 
                             <p className="text-base sm:text-lg text-slate-600 font-normal font-sans leading-relaxed max-w-2xl">
-                                Need an expert for appliance repairs in Melbourne? At <strong className="text-[#0B1E36] font-bold">CDS Appliance Services</strong>, our licensed technicians provide{" "}
+                                {contentData.serviceAreas.heroDesc1} <strong className="text-[#0B1E36] font-bold">{contentData.serviceAreas.heroDescStrong}</strong>{contentData.serviceAreas.heroDesc2}{" "}
                                 <span className="inline-block bg-[#FEF08A] text-[#0B1E36] px-2 py-0.5 font-bold rounded-xs">
-                                    same-day repairs
+                                    {contentData.serviceAreas.heroDescHighlight}
                                 </span>{" "}
-                                for all major household appliances. We’ve built a trusted reputation across Greater Melbourne for delivering fast, professional, and long-lasting mechanical resolution.
+                                {contentData.serviceAreas.heroDesc3}
                             </p>
                         </motion.div>
 
@@ -149,10 +147,10 @@ export default function ServiceAreasSection() {
 
                                 {/* Corner Markers */}
                                 <div className="absolute top-2 left-2 text-[9px] font-mono font-bold text-slate-500 uppercase tracking-widest z-20">
-                                    SYS_REF: DISPATCH-2026 // MELB
+                                    {contentData.serviceAreas.sysRef}
                                 </div>
                                 <div className="absolute bottom-2 right-2 text-[9px] font-mono font-bold text-slate-500 uppercase tracking-widest z-20">
-                                    COVERAGE: 25+ ZONES
+                                    {contentData.serviceAreas.coverageZones}
                                 </div>
 
                                 <div className="relative w-full h-full rounded-sm overflow-hidden bg-slate-100">
@@ -170,10 +168,10 @@ export default function ServiceAreasSection() {
                                 <div className="absolute bottom-6 left-6 z-20 bg-white/95 backdrop-blur-md border border-slate-300 p-3.5 rounded-sm shadow-xl max-w-[210px]">
                                     <div className="flex items-center gap-2 text-[#0284C7] font-mono text-[10px] font-bold uppercase mb-1">
                                         <Gauge className="w-3.5 h-3.5" />
-                                        MOBILE WORKSHOPS
+                                        {contentData.serviceAreas.mobileWorkshops}
                                     </div>
                                     <div className="text-[#0B1E36] font-sans text-xs font-black leading-tight">
-                                        OEM Parts Stocked On-Site
+                                        {contentData.serviceAreas.oemParts}
                                     </div>
                                 </div>
 
@@ -213,16 +211,16 @@ export default function ServiceAreasSection() {
 
                     <div className="text-center max-w-2xl mx-auto mb-12">
                         <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block mb-2">
-                            LOCAL DISPATCH DIRECTORY
+                            {contentData.serviceAreas.dirBadge}
                         </span>
                         <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                            Select Your{" "}
+                            {contentData.serviceAreas.dirTitleMain}{" "}
                             <span className="inline-block bg-[#BAE6FD] text-[#0B1E36] px-3 py-0.5 rounded-xs shadow-2xs">
-                                Service Area
+                                {contentData.serviceAreas.dirTitleHighlight}
                             </span>
                         </h2>
                         <p className="text-sm text-slate-600 mt-3 font-sans font-medium">
-                            Click any Greater Melbourne suburb below to check local technician availability and service response times.
+                            {contentData.serviceAreas.dirSubtitle}
                         </p>
                     </div>
 
@@ -231,7 +229,7 @@ export default function ServiceAreasSection() {
                         <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                         <input
                             type="text"
-                            placeholder="Search suburbs (e.g. Brighton, Dandenong, Box Hill)..."
+                            placeholder={contentData.serviceAreas.searchPlaceholder}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full bg-white/90 backdrop-blur-md border-2 border-slate-300 rounded-full py-3 pl-11 pr-6 text-sm text-[#0B1E36] placeholder-slate-400 focus:outline-none focus:border-[#0B1E36] focus:bg-white transition-all font-sans shadow-md font-medium"
@@ -244,10 +242,10 @@ export default function ServiceAreasSection() {
                         {/* Left Column: Symmetrical Square Grid Selector (Span 7) */}
                         <div className="lg:col-span-7 bg-white/80 backdrop-blur-md border border-slate-200/80 p-6 sm:p-8 rounded-sm shadow-xl">
                             <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200 text-xs font-mono">
-                                <span className="text-slate-500 font-bold">AVAILABLE SUBURBS ({filteredSuburbs.length})</span>
+                                <span className="text-slate-500 font-bold">{contentData.serviceAreas.availableSuburbs} ({filteredSuburbs.length})</span>
                                 <span className="text-emerald-700 font-bold flex items-center gap-1.5 bg-emerald-100 px-2 py-0.5 rounded-xs border border-emerald-300">
                                     <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse" />
-                                    TECHNICIANS ACTIVE
+                                    {contentData.serviceAreas.techsActive}
                                 </span>
                             </div>
 
@@ -285,21 +283,21 @@ export default function ServiceAreasSection() {
                                 >
                                     {/* Top Pastel Badge */}
                                     <div className="flex items-center justify-between text-[11px] font-mono font-bold tracking-wider text-[#0B1E36] uppercase mb-3">
-                                        <span className="bg-[#FEF08A] px-2.5 py-1 rounded-xs border border-yellow-300">COVERAGE VERIFIED</span>
-                                        <span className="text-slate-400">GREATER MELBOURNE</span>
+                                        <span className="bg-[#FEF08A] px-2.5 py-1 rounded-xs border border-yellow-300">{contentData.serviceAreas.covVerified}</span>
+                                        <span className="text-slate-400">{contentData.serviceAreas.greaterMelb}</span>
                                     </div>
 
                                     <h3 className="text-3xl font-black text-[#0B1E36] tracking-tight uppercase font-sans mb-1">
                                         {selectedSuburb.name}
                                     </h3>
                                     <span className="text-xs font-mono text-slate-500 uppercase block mb-6">
-                                        REGION: {selectedSuburb.region}
+                                        {contentData.serviceAreas.regionLabel} {selectedSuburb.region}
                                     </span>
 
                                     <div className="space-y-4 border-y border-slate-200 py-6 mb-6 font-sans text-sm">
                                         <div className="flex items-center justify-between">
                                             <span className="text-slate-600 flex items-center gap-2 font-medium">
-                                                <Wrench className="w-4 h-4 text-[#0B1E36]" /> Service Status:
+                                                <Wrench className="w-4 h-4 text-[#0B1E36]" /> {contentData.serviceAreas.serviceStatusLabel}
                                             </span>
                                             <span className="font-bold text-[#0B1E36] font-mono text-xs bg-[#A7F3D0] border border-emerald-400 px-2.5 py-1 rounded-xs">
                                                 {selectedSuburb.status}
@@ -308,7 +306,7 @@ export default function ServiceAreasSection() {
 
                                         <div className="flex items-center justify-between">
                                             <span className="text-slate-600 flex items-center gap-2 font-medium">
-                                                <Clock className="w-4 h-4 text-[#0B1E36]" /> Response Time:
+                                                <Clock className="w-4 h-4 text-[#0B1E36]" /> {contentData.serviceAreas.responseTimeLabel}
                                             </span>
                                             <span className="font-bold text-[#0B1E36] font-mono text-xs bg-[#BAE6FD] border border-sky-300 px-2.5 py-1 rounded-xs">
                                                 {selectedSuburb.sla}
@@ -317,10 +315,10 @@ export default function ServiceAreasSection() {
 
                                         <div className="flex items-center justify-between">
                                             <span className="text-slate-600 flex items-center gap-2 font-medium">
-                                                <ShieldCheck className="w-4 h-4 text-[#0B1E36]" /> Warranty Included:
+                                                <ShieldCheck className="w-4 h-4 text-[#0B1E36]" /> {contentData.serviceAreas.warrantyLabel}
                                             </span>
                                             <span className="font-bold text-[#0B1E36] font-mono text-xs">
-                                                12M Parts / 3M Labour
+                                                {contentData.serviceAreas.warrantyText}
                                             </span>
                                         </div>
                                     </div>
@@ -331,10 +329,10 @@ export default function ServiceAreasSection() {
                                             className="w-full py-4 bg-[#0B1E36] hover:bg-[#0284C7] text-white font-bold font-sans text-sm tracking-wider uppercase rounded-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-md"
                                         >
                                             <PhoneCall className="w-4 h-4 shrink-0 fill-current" />
-                                            <span>Book Technician in {selectedSuburb.name}</span>
+                                            <span>{contentData.serviceAreas.bookTechPrefix} {selectedSuburb.name}</span>
                                         </a>
                                         <p className="text-[11px] text-center font-sans font-medium text-slate-500">
-                                            Evening appointments (4–7 PM) &amp; weekend emergency slots available.
+                                            {contentData.serviceAreas.eveningAppts}
                                         </p>
                                     </div>
 
@@ -363,12 +361,12 @@ export default function ServiceAreasSection() {
 
                     <div className="text-center max-w-2xl mx-auto mb-16">
                         <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block mb-2">
-                            THE CDS STANDARDS
+                            {contentData.serviceAreas.stdBadge}
                         </span>
                         <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                            Why Choose{" "}
+                            {contentData.serviceAreas.stdTitleMain}{" "}
                             <span className="inline-block bg-[#DDD6FE] text-[#0B1E36] px-3 py-0.5 rounded-xs shadow-2xs">
-                                CDS Appliance?
+                                {contentData.serviceAreas.stdTitleHighlight}
                             </span>
                         </h2>
                     </div>
@@ -423,16 +421,16 @@ export default function ServiceAreasSection() {
                         {/* Left: Section Explanation */}
                         <div className="lg:w-1/3 space-y-4">
                             <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block">
-                                TECHNICAL STANDARDS
+                                {contentData.serviceAreas.techBadge}
                             </span>
                             <h2 className="text-3xl font-black text-[#0B1E36] uppercase tracking-tight font-sans leading-tight">
-                                Appliance Repair &amp;{" "}
+                                {contentData.serviceAreas.techTitleMain}{" "}
                                 <span className="inline-block bg-[#FEF08A] text-[#0B1E36] px-2.5 py-0.5 rounded-xs mt-1 shadow-2xs">
-                                    Service Protocols
+                                    {contentData.serviceAreas.techTitleHighlight}
                                 </span>
                             </h2>
                             <p className="text-sm text-slate-600 font-sans leading-relaxed font-medium">
-                                We repair and service all major residential and commercial appliances across Melbourne, restoring mechanical performance to strict manufacturer tolerances without guesswork.
+                                {contentData.serviceAreas.techSubtitle}
                             </p>
                         </div>
 
@@ -450,7 +448,7 @@ export default function ServiceAreasSection() {
                                         <Wrench className="w-4 h-4 text-slate-400" />
                                     </div>
                                     <p className="text-xs font-sans text-slate-600 leading-relaxed pt-1 font-medium">
-                                        <strong className="text-[#0B1E36] font-bold">Common Faults:</strong> {srv.faults}
+                                        <strong className="text-[#0B1E36] font-bold">{contentData.serviceAreas.commonFaultsLabel}</strong> {srv.faults}
                                     </p>
                                 </div>
                             ))}
@@ -477,16 +475,16 @@ export default function ServiceAreasSection() {
                     <div className="bg-white border-2 border-slate-200 p-8 sm:p-12 rounded-sm text-center space-y-8 shadow-sm">
                         <div>
                             <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block mb-2">
-                                FACTORY TRAINING &amp; COMPLIANCE
+                                {contentData.serviceAreas.brandBadge}
                             </span>
                             <h3 className="text-2xl sm:text-3xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                                Appliance Brands{" "}
+                                {contentData.serviceAreas.brandTitleMain}{" "}
                                 <span className="inline-block bg-[#A7F3D0] text-[#0B1E36] px-3 py-0.5 rounded-xs shadow-2xs">
-                                    We Service
+                                    {contentData.serviceAreas.brandTitleHighlight}
                                 </span>
                             </h3>
                             <p className="text-xs sm:text-sm font-sans text-slate-600 mt-2 font-medium">
-                                Authorised service partner for leading European and global manufacturers.
+                                {contentData.serviceAreas.brandSubtitle}
                             </p>
                         </div>
 
@@ -525,14 +523,14 @@ export default function ServiceAreasSection() {
 
                 <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center space-y-6 max-w-2xl mx-auto relative z-10">
                     <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans leading-tight">
-                        Book Your{" "}
+                        {contentData.serviceAreas.ctaTitleMain1}{" "}
                         <span className="inline-block bg-[#A3E635] text-[#0F172A] px-3 py-0.5 rounded-xs shadow-2xs">
-                            Melbourne Repair
+                            {contentData.serviceAreas.ctaTitleHighlight}
                         </span>{" "}
-                        Today
+                        {contentData.serviceAreas.ctaTitleMain2}
                     </h2>
                     <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed font-medium">
-                        At CDS Appliance Services, we’re proud to be your local Melbourne appliance repair experts, keeping residential and commercial properties running smoothly across Greater Melbourne.
+                        {contentData.serviceAreas.ctaSubtitle}
                     </p>
                     <div className="pt-2">
                         <a
@@ -540,7 +538,7 @@ export default function ServiceAreasSection() {
                             className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#0B1E36] hover:bg-[#0284C7] text-white font-bold font-sans text-sm tracking-wider uppercase rounded-sm transition-all duration-300 shadow-xl shadow-[#0B1E36]/10 scale-[1.02] hover:scale-105"
                         >
                             <PhoneCall className="w-4 h-4 fill-current shrink-0" />
-                            <span>Call 0405 545 609</span>
+                            <span>{contentData.serviceAreas.ctaButton}</span>
                         </a>
                     </div>
                 </div>

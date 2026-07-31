@@ -1,5 +1,5 @@
 "use client";
-
+import contentData from '../../data/content.json';
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -129,19 +129,19 @@ export default function PropertyManagementSection() {
                             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-white/10 border border-white/15 rounded-full backdrop-blur-md">
                                 <Building2 className="w-3.5 h-3.5 text-[#38BDF8]" />
                                 <span className="text-xs font-mono font-bold tracking-widest text-[#38BDF8] uppercase">
-                                    MELBOURNE REAL ESTATE PARTNERSHIPS
+                                    {contentData.propertyManagement.heroBadge}
                                 </span>
                             </div>
 
                             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white uppercase font-sans leading-[1.08]">
-                                Melbourne&apos;s Property Maintenance &amp; Appliance Specialists for{" "}
+                                {contentData.propertyManagement.heroTitleMain}{" "}
                                 <span className="inline-block bg-[#38BDF8] text-[#071324] px-3 py-1 font-black rounded-xs shadow-md mt-1">
-                                    Real Estate Agencies.
+                                    {contentData.propertyManagement.heroTitleHighlight}
                                 </span>
                             </h1>
 
                             <p className="text-base sm:text-lg text-slate-300 font-normal font-sans leading-relaxed max-w-2xl">
-                                One call for appliance repairs, electrical work, air conditioning, cabinet modifications, and comprehensive maintenance coordination across Greater Melbourne.
+                                {contentData.propertyManagement.heroDesc}
                             </p>
                         </motion.div>
 
@@ -162,23 +162,23 @@ export default function PropertyManagementSection() {
 
                         <motion.div custom={1} initial="hidden" animate="visible" variants={fadeUp} className="lg:col-span-7 space-y-6">
                             <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block">
-                                STREAMLINED OPERATIONS
+                                {contentData.propertyManagement.solutionsBadge}
                             </span>
                             <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans leading-tight">
-                                Reliable Appliance &amp; Air Conditioning Solutions{" "}
+                                {contentData.propertyManagement.solutionsTitleMain}{" "}
                                 <span className="inline-block bg-[#FEF08A] text-[#0B1E36] px-2 py-0.5 rounded-xs">
-                                    for Property
+                                    {contentData.propertyManagement.solutionsTitleHighlight}
                                 </span>
                             </h2>
                             <div className="space-y-4 text-sm sm:text-base text-slate-600 font-sans leading-relaxed">
                                 <p>
-                                    At CDS Appliance Services, we understand the challenges property managers face every day; coordinating trades, managing tenant expectations, obtaining quotes, and ensuring repairs are completed quickly can consume valuable time.
+                                    {contentData.propertyManagement.solutionsDesc1}
                                 </p>
                                 <div className="p-4 bg-[#F8FAFC] border-l-4 border-[#0B1E36] rounded-r-sm font-bold text-[#0B1E36]">
-                                    Our goal is simple: <span className="text-[#0284C7]">make property maintenance easier for your team.</span>
+                                    {contentData.propertyManagement.solutionsHighlightPrefix} <span className="text-[#0284C7]">{contentData.propertyManagement.solutionsHighlightText}</span>
                                 </div>
                                 <p>
-                                    We provide professional appliance and air conditioning services throughout Melbourne, working directly with tenants, landlords, and property managers to deliver fast, efficient outcomes with minimal administration.
+                                    {contentData.propertyManagement.solutionsDesc2}
                                 </p>
                             </div>
                         </motion.div>
@@ -187,7 +187,7 @@ export default function PropertyManagementSection() {
                         <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp} className="lg:col-span-5">
                             <div className="relative aspect-[4/3] rounded-sm overflow-hidden border-2 border-slate-300 bg-white p-3 shadow-2xl group">
                                 <div className="absolute top-2 left-2 text-[9px] font-mono font-bold text-slate-500 uppercase tracking-widest z-20">
-                                    REF: HVAC-ROOFTOP // MELB
+                                    {contentData.propertyManagement.solutionsImgRef}
                                 </div>
                                 <div className="relative w-full h-full rounded-sm overflow-hidden bg-slate-100">
                                     <Image
@@ -221,12 +221,12 @@ export default function PropertyManagementSection() {
 
                     <div className="text-center max-w-2xl mx-auto mb-16">
                         <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block mb-2">
-                            AGENCY ADVANTAGE
+                            {contentData.propertyManagement.advantageBadge}
                         </span>
                         <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                            Why Property Managers{" "}
+                            {contentData.propertyManagement.advantageTitleMain}{" "}
                             <span className="inline-block bg-[#A3E635] text-[#0F172A] px-3 py-0.5 rounded-xs shadow-2xs">
-                                Choose CDS
+                                {contentData.propertyManagement.advantageTitleHighlight}
                             </span>
                         </h2>
                     </div>
@@ -266,16 +266,16 @@ export default function PropertyManagementSection() {
 
                         <div className="lg:col-span-6 space-y-6">
                             <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block">
-                                THE STANDARD
+                                {contentData.propertyManagement.diffBadge}
                             </span>
                             <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                                The CDS{" "}
+                                {contentData.propertyManagement.diffTitleMain}{" "}
                                 <span className="inline-block bg-[#DDD6FE] text-[#0B1E36] px-3 py-0.5 rounded-xs">
-                                    Difference
+                                    {contentData.propertyManagement.diffTitleHighlight}
                                 </span>
                             </h2>
                             <p className="text-sm text-slate-600 font-sans leading-relaxed">
-                                We understand that property managers need more than just a repair technician. You need a contractor who:
+                                {contentData.propertyManagement.diffDesc}
                             </p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                                 {DIFFERENCES.map((diff, i) => (
@@ -291,13 +291,13 @@ export default function PropertyManagementSection() {
                         <div className="lg:col-span-6 bg-[#0B1E36] text-white p-8 sm:p-10 rounded-sm shadow-xl space-y-6">
                             <div className="flex items-center gap-2 text-[#38BDF8] font-mono text-xs font-bold tracking-widest uppercase">
                                 <ShieldCheck className="w-5 h-5" />
-                                LICENSED &amp; FULLY INSURED PARTNERS
+                                {contentData.propertyManagement.accBadge}
                             </div>
                             <h3 className="text-2xl font-black font-sans uppercase">
-                                Why Agents Trust Us
+                                {contentData.propertyManagement.accTitle}
                             </h3>
                             <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
-                                We carry comprehensive $10 million Public Liability insurance, full electrical licensing (REC 38111), plumbing compliance (BPC 131134), and ARCTick certification for all air conditioning works.
+                                {contentData.propertyManagement.accDesc}
                             </p>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-white/10 text-center font-mono text-xs">
                                 <div className="p-3 bg-white/5 border border-white/10 rounded-xs">
@@ -340,12 +340,12 @@ export default function PropertyManagementSection() {
 
                     <div className="text-center max-w-2xl mx-auto mb-16">
                         <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block mb-2">
-                            SPECIALIZED TRADES
+                            {contentData.propertyManagement.tradesBadge}
                         </span>
                         <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                            Services Available for{" "}
+                            {contentData.propertyManagement.tradesTitleMain}{" "}
                             <span className="inline-block bg-[#BAE6FD] text-[#0B1E36] px-3 py-0.5 rounded-xs">
-                                Real Estate Agencies
+                                {contentData.propertyManagement.tradesTitleHighlight}
                             </span>
                         </h2>
                     </div>
@@ -366,7 +366,7 @@ export default function PropertyManagementSection() {
                                 </div>
                                 <div className="px-6 pb-6 pt-2">
                                     <Link href="/contact" className="inline-flex items-center gap-2 text-xs font-bold text-[#0B1E36] hover:text-[#0284C7] uppercase font-sans tracking-wide">
-                                        <span>Book this service</span>
+                                        <span>{contentData.propertyManagement.tradesBookButton}</span>
                                         <ArrowRight className="w-3.5 h-3.5" />
                                     </Link>
                                 </div>
@@ -383,12 +383,12 @@ export default function PropertyManagementSection() {
 
                     <div>
                         <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block mb-2">
-                            VALUED PORTFOLIO PARTNERS
+                            {contentData.propertyManagement.partnersBadge}
                         </span>
                         <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                            Trusted by Leading Melbourne{" "}
+                            {contentData.propertyManagement.partnersTitleMain}{" "}
                             <span className="inline-block bg-[#FEF08A] text-[#0B1E36] px-3 py-0.5 rounded-xs">
-                                Real Estate Networks
+                                {contentData.propertyManagement.partnersTitleHighlight}
                             </span>
                         </h2>
                     </div>
@@ -412,18 +412,18 @@ export default function PropertyManagementSection() {
                 <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center space-y-6 max-w-2xl mx-auto relative z-10">
 
                     <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#38BDF8] uppercase block">
-                        PORTFOLIO MANAGEMENT
+                        {contentData.propertyManagement.ctaBadge}
                     </span>
 
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight font-sans leading-tight">
-                        Let&apos;s Discuss Your{" "}
+                        {contentData.propertyManagement.ctaTitleMain1}{" "}
                         <span className="inline-block bg-[#A3E635] text-[#0F172A] px-3 py-1 rounded-xs">
-                            Portfolio.
+                            {contentData.propertyManagement.ctaTitleHighlight}
                         </span>
                     </h2>
 
                     <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed font-medium">
-                        Whether you manage a small portfolio or hundreds of properties, CDS Appliance Services can provide a reliable appliance and air conditioning maintenance solution tailored to your needs.
+                        {contentData.propertyManagement.ctaDesc}
                     </p>
 
                     <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -432,20 +432,20 @@ export default function PropertyManagementSection() {
                             className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#38BDF8] hover:bg-white text-[#071324] font-black font-sans text-sm tracking-wider uppercase rounded-sm transition-all duration-300 shadow-xl"
                         >
                             <PhoneCall className="w-4 h-4 fill-current shrink-0" />
-                            <span>Chris at CDS: 0405 545 609</span>
+                            <span>{contentData.propertyManagement.ctaButton1}</span>
                         </a>
 
                         <Link
                             href="/contact"
                             className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold font-sans text-sm tracking-wider uppercase rounded-sm transition-all duration-300"
                         >
-                            <span>Get in Touch Online</span>
+                            <span>{contentData.propertyManagement.ctaButton2}</span>
                             <ArrowRight className="w-4 h-4" />
                         </Link>
                     </div>
 
                     <div className="text-xs font-mono text-slate-400 pt-4">
-                        Direct Email: <a href="mailto:chris@cdsapplianceservices.com.au" className="text-[#38BDF8] underline">chris@cdsapplianceservices.com.au</a>
+                        {contentData.propertyManagement.ctaEmailLabel} <a href={`mailto:${contentData.propertyManagement.ctaEmailAddress}`} className="text-[#38BDF8] underline">{contentData.propertyManagement.ctaEmailAddress}</a>
                     </div>
 
                 </div>

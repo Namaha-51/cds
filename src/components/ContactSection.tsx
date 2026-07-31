@@ -1,5 +1,6 @@
 "use client";
 
+import contentData from "../../data/content.json";
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion, type Easing } from "framer-motion";
@@ -31,46 +32,6 @@ const fadeUp = {
     }),
 };
 
-// Quick Contact Cards
-const CONTACT_INFO = [
-    {
-        icon: PhoneCall,
-        title: "Direct Dispatch Phone",
-        val: "0405 545 609",
-        sub: "Immediate same-day booking & emergency inquiries.",
-        href: "tel:0405545609",
-        badge: "FASTEST RESPONSE",
-        badgeBg: "bg-[#A3E635] text-[#0F172A]",
-    },
-    {
-        icon: Mail,
-        title: "Email & Client Liaison",
-        val: "service@cdsapplianceservices.com.au",
-        sub: "For property managers, real estate quotes & invoices.",
-        href: "mailto:service@cdsapplianceservices.com.au",
-        badge: "INVOICES & QUOTES",
-        badgeBg: "bg-[#BAE6FD] text-[#0B1E36]",
-    },
-    {
-        icon: MapPin,
-        title: "Base of Operations",
-        val: "Noble Park VIC 3174",
-        sub: "Mobile workshop fleet dispatching across Greater Melbourne.",
-        href: "#",
-        badge: "GREATER MELBOURNE",
-        badgeBg: "bg-[#FEF08A] text-[#0B1E36]",
-    },
-    {
-        icon: Clock,
-        title: "Operating Hours",
-        val: "Mon–Fri: 8:00 AM – 7:00 PM",
-        sub: "Evening slots (4–7 PM) & weekend emergency service available.",
-        href: "#",
-        badge: "EVENING SLOTS",
-        badgeBg: "bg-[#DDD6FE] text-[#0B1E36]",
-    },
-];
-
 export default function ContactSection() {
     const [formData, setFormData] = useState({
         name: "",
@@ -90,10 +51,49 @@ export default function ContactSection() {
         setIsSubmitted(true);
     };
 
+    const CONTACT_INFO = [
+        {
+            icon: PhoneCall,
+            title: contentData.contact.phoneCardTitle,
+            val: contentData.contact.phoneCardVal,
+            sub: contentData.contact.phoneCardSub,
+            href: "tel:0405545609",
+            badge: contentData.contact.phoneCardBadge,
+            badgeBg: "bg-[#A3E635] text-[#0F172A]",
+        },
+        {
+            icon: Mail,
+            title: contentData.contact.emailCardTitle,
+            val: contentData.contact.emailCardVal,
+            sub: contentData.contact.emailCardSub,
+            href: "mailto:service@cdsapplianceservices.com.au",
+            badge: contentData.contact.emailCardBadge,
+            badgeBg: "bg-[#BAE6FD] text-[#0B1E36]",
+        },
+        {
+            icon: MapPin,
+            title: contentData.contact.locationCardTitle,
+            val: contentData.contact.locationCardVal,
+            sub: contentData.contact.locationCardSub,
+            href: "#",
+            badge: contentData.contact.locationCardBadge,
+            badgeBg: "bg-[#FEF08A] text-[#0B1E36]",
+        },
+        {
+            icon: Clock,
+            title: contentData.contact.hoursCardTitle,
+            val: contentData.contact.hoursCardVal,
+            sub: contentData.contact.hoursCardSub,
+            href: "#",
+            badge: contentData.contact.hoursCardBadge,
+            badgeBg: "bg-[#DDD6FE] text-[#0B1E36]",
+        },
+    ];
+
     return (
         <section className="relative bg-white text-slate-800 overflow-hidden select-none">
 
-            {/* 📍 1. TOP ARCHITECTURAL HERO (pt-36 md:pt-44 clears the 136px fixed header) */}
+            {/* 📍 1. TOP ARCHITECTURAL HERO */}
             <div className="relative pt-36 pb-20 md:pt-44 md:pb-24 bg-[#F8FAFC] border-b border-slate-200/80 overflow-hidden">
 
                 {/* Subtle Engineering Dot-Grid */}
@@ -116,25 +116,25 @@ export default function ContactSection() {
                                     CDS
                                 </div>
                                 <span className="text-xs font-mono font-bold tracking-widest text-[#0B1E36] uppercase">
-                                    EST. MELBOURNE • DIRECT CLIENT LIAISON
+                                    {contentData.contact.heroBadge}
                                 </span>
                             </div>
 
                             {/* Headline with Solid Light Highlight */}
                             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#0B1E36] uppercase font-sans leading-[1.1]">
-                                Contact Our{" "}
+                                {contentData.contact.heroTitleMain}{" "}
                                 <span className="inline-block bg-[#A3E635] text-[#0F172A] px-3 py-1 font-black rounded-xs shadow-2xs">
-                                    Melbourne Team
+                                    {contentData.contact.heroTitleHighlight}
                                 </span>{" "}
-                                Today.
+                                {contentData.contact.heroTitleMain2}
                             </h1>
 
                             <p className="text-base sm:text-lg text-slate-600 font-normal font-sans leading-relaxed max-w-2xl">
-                                Need immediate appliance repairs or advice? Speak directly with Melbourne’s licensed engineering specialists. We offer{" "}
+                                {contentData.contact.heroDesc1}{" "}
                                 <span className="inline-block bg-[#FEF08A] text-[#0B1E36] px-2 py-0.5 font-bold rounded-xs">
-                                    same-day dispatch
+                                    {contentData.contact.heroDescHighlight}
                                 </span>{" "}
-                                and convenient evening appointment slots across Greater Melbourne.
+                                {contentData.contact.heroDesc2}
                             </p>
                         </motion.div>
 
@@ -149,10 +149,10 @@ export default function ContactSection() {
                             <div className="relative aspect-[4/3] w-full max-w-lg lg:max-w-none ml-auto rounded-sm overflow-hidden border-2 border-slate-300 bg-white p-3 shadow-2xl group">
 
                                 <div className="absolute top-2 left-2 text-[9px] font-mono font-bold text-slate-500 uppercase tracking-widest z-20">
-                                    SYS_REF: CONTACT-2026 // MELB
+                                    {contentData.contact.sysRef}
                                 </div>
                                 <div className="absolute bottom-2 right-2 text-[9px] font-mono font-bold text-slate-500 uppercase tracking-widest z-20">
-                                    STATUS: DISPATCH ACTIVE
+                                    {contentData.contact.sysStatus}
                                 </div>
 
                                 <div className="relative w-full h-full rounded-sm overflow-hidden bg-slate-100">
@@ -169,10 +169,10 @@ export default function ContactSection() {
                                 <div className="absolute bottom-6 left-6 z-20 bg-white/95 backdrop-blur-md border border-slate-300 p-3.5 rounded-sm shadow-xl max-w-[210px]">
                                     <div className="flex items-center gap-2 text-[#0284C7] font-mono text-[10px] font-bold uppercase mb-1">
                                         <Gauge className="w-3.5 h-3.5" />
-                                        RESPONSE SLA
+                                        {contentData.contact.slaBadge}
                                     </div>
                                     <div className="text-[#0B1E36] font-sans text-xs font-black leading-tight">
-                                        Same-Day &amp; Evening Bookings
+                                        {contentData.contact.slaText}
                                     </div>
                                 </div>
 
@@ -194,13 +194,13 @@ export default function ContactSection() {
 
                             <div className="space-y-2 pb-2">
                                 <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block">
-                                    FAST &amp; RELIABLE
+                                    {contentData.contact.infoSectionBadge}
                                 </span>
                                 <h2 className="text-2xl sm:text-3xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                                    Get In Touch
+                                    {contentData.contact.infoSectionTitle}
                                 </h2>
                                 <p className="text-sm text-slate-600 font-sans leading-relaxed">
-                                    Whether you have an emergency breakdown or need a scheduled maintenance quote for your rental property, our dispatch desk is ready.
+                                    {contentData.contact.infoSectionDesc}
                                 </p>
                             </div>
 
@@ -236,13 +236,13 @@ export default function ContactSection() {
                             <div className="bg-slate-900 text-white p-6 rounded-sm border border-slate-800 space-y-3 shadow-md">
                                 <div className="flex items-center gap-2 text-[#38BDF8] font-mono text-xs font-bold tracking-widest uppercase">
                                     <ShieldCheck className="w-4 h-4" />
-                                    VERIFIED ACCREDITATIONS
+                                    {contentData.contact.accreditationBadge}
                                 </div>
                                 <div className="grid grid-cols-2 gap-2 text-xs font-mono text-slate-300">
-                                    <div>• ESV LIC: <strong className="text-white">D20380</strong></div>
-                                    <div>• ARCTICK: <strong className="text-white">AU066324</strong></div>
-                                    <div>• BPC LIC: <strong className="text-white">131134</strong></div>
-                                    <div>• ELEC REC: <strong className="text-white">38111</strong></div>
+                                    <div>• {contentData.contact.esvLic}</div>
+                                    <div>• {contentData.contact.arctickLic}</div>
+                                    <div>• {contentData.contact.bpcLic}</div>
+                                    <div>• {contentData.contact.elecRec}</div>
                                 </div>
                             </div>
 
@@ -255,14 +255,14 @@ export default function ContactSection() {
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-slate-200 gap-4">
                                     <div>
                                         <span className="bg-[#FEF08A] text-[#0B1E36] text-[10px] font-mono font-bold px-2.5 py-1 rounded-xs border border-yellow-300 tracking-wider uppercase inline-block mb-2">
-                                            ONLINE BOOKING DESK
+                                            {contentData.contact.formBadge}
                                         </span>
                                         <h3 className="text-2xl sm:text-3xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                                            Request a Service
+                                            {contentData.contact.formTitle}
                                         </h3>
                                     </div>
                                     <div className="text-xs font-mono text-slate-500 bg-[#F8FAFC] px-3 py-2 rounded-xs border border-slate-200 h-max">
-                                        ⚡ Fixed Upfront Quotes
+                                        {contentData.contact.formTag}
                                     </div>
                                 </div>
 
@@ -277,17 +277,17 @@ export default function ContactSection() {
                                         </div>
                                         <div className="space-y-2 max-w-md mx-auto">
                                             <h4 className="text-2xl font-black text-[#0B1E36] uppercase font-sans">
-                                                Request Received
+                                                {contentData.contact.successTitle}
                                             </h4>
                                             <p className="text-sm text-slate-600 font-sans leading-relaxed">
-                                                Thank you, <strong className="text-[#0B1E36]">{formData.name}</strong>. Our Melbourne dispatch team is reviewing your fault details and will call you shortly at <strong className="text-[#0B1E36]">{formData.phone}</strong> to confirm your technician’s arrival window.
+                                                {contentData.contact.successMessage1} <strong className="text-[#0B1E36]">{formData.name}</strong>{contentData.contact.successMessage2} <strong className="text-[#0B1E36]">{formData.phone}</strong> {contentData.contact.successMessage3}
                                             </p>
                                         </div>
                                         <button
                                             onClick={() => setIsSubmitted(false)}
                                             className="px-6 py-2.5 bg-[#0B1E36] text-white font-bold font-sans text-xs tracking-wider uppercase rounded-sm hover:bg-[#0284C7] transition-colors shadow-sm"
                                         >
-                                            Book Another Appliance
+                                            {contentData.contact.successButton}
                                         </button>
                                     </motion.div>
                                 ) : (
@@ -296,12 +296,12 @@ export default function ContactSection() {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                             <div className="space-y-2">
                                                 <label className="text-xs font-bold text-[#0B1E36] uppercase tracking-wide flex items-center gap-1.5">
-                                                    <User className="w-3.5 h-3.5 text-[#0284C7]" /> Full Name *
+                                                    <User className="w-3.5 h-3.5 text-[#0284C7]" /> {contentData.contact.formNameLabel}
                                                 </label>
                                                 <input
                                                     type="text"
                                                     required
-                                                    placeholder="e.g. David Miller"
+                                                    placeholder={contentData.contact.formNamePlaceholder}
                                                     value={formData.name}
                                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                                     className="w-full bg-[#F8FAFC] border border-slate-300 rounded-xs px-4 py-3 text-sm text-[#0B1E36] placeholder-slate-400 focus:outline-none focus:border-[#0B1E36] focus:bg-white transition-all font-medium"
@@ -310,12 +310,12 @@ export default function ContactSection() {
 
                                             <div className="space-y-2">
                                                 <label className="text-xs font-bold text-[#0B1E36] uppercase tracking-wide flex items-center gap-1.5">
-                                                    <PhoneCall className="w-3.5 h-3.5 text-[#0284C7]" /> Phone Number *
+                                                    <PhoneCall className="w-3.5 h-3.5 text-[#0284C7]" /> {contentData.contact.formPhoneLabel}
                                                 </label>
                                                 <input
                                                     type="tel"
                                                     required
-                                                    placeholder="e.g. 0400 000 000"
+                                                    placeholder={contentData.contact.formPhonePlaceholder}
                                                     value={formData.phone}
                                                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                                     className="w-full bg-[#F8FAFC] border border-slate-300 rounded-xs px-4 py-3 text-sm text-[#0B1E36] placeholder-slate-400 focus:outline-none focus:border-[#0B1E36] focus:bg-white transition-all font-medium"
@@ -326,11 +326,11 @@ export default function ContactSection() {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                             <div className="space-y-2">
                                                 <label className="text-xs font-bold text-[#0B1E36] uppercase tracking-wide flex items-center gap-1.5">
-                                                    <Mail className="w-3.5 h-3.5 text-[#0284C7]" /> Email Address
+                                                    <Mail className="w-3.5 h-3.5 text-[#0284C7]" /> {contentData.contact.formEmailLabel}
                                                 </label>
                                                 <input
                                                     type="email"
-                                                    placeholder="e.g. david@example.com"
+                                                    placeholder={contentData.contact.formEmailPlaceholder}
                                                     value={formData.email}
                                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                                     className="w-full bg-[#F8FAFC] border border-slate-300 rounded-xs px-4 py-3 text-sm text-[#0B1E36] placeholder-slate-400 focus:outline-none focus:border-[#0B1E36] focus:bg-white transition-all font-medium"
@@ -339,12 +339,12 @@ export default function ContactSection() {
 
                                             <div className="space-y-2">
                                                 <label className="text-xs font-bold text-[#0B1E36] uppercase tracking-wide flex items-center gap-1.5">
-                                                    <MapPin className="w-3.5 h-3.5 text-[#0284C7]" /> Suburb / Postcode *
+                                                    <MapPin className="w-3.5 h-3.5 text-[#0284C7]" /> {contentData.contact.formSuburbLabel}
                                                 </label>
                                                 <input
                                                     type="text"
                                                     required
-                                                    placeholder="e.g. Brighton 3186"
+                                                    placeholder={contentData.contact.formSuburbPlaceholder}
                                                     value={formData.suburb}
                                                     onChange={(e) => setFormData({ ...formData, suburb: e.target.value })}
                                                     className="w-full bg-[#F8FAFC] border border-slate-300 rounded-xs px-4 py-3 text-sm text-[#0B1E36] placeholder-slate-400 focus:outline-none focus:border-[#0B1E36] focus:bg-white transition-all font-medium"
@@ -355,7 +355,7 @@ export default function ContactSection() {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                             <div className="space-y-2">
                                                 <label className="text-xs font-bold text-[#0B1E36] uppercase tracking-wide flex items-center gap-1.5">
-                                                    <Wrench className="w-3.5 h-3.5 text-[#0284C7]" /> Appliance Type
+                                                    <Wrench className="w-3.5 h-3.5 text-[#0284C7]" /> {contentData.contact.formApplianceLabel}
                                                 </label>
                                                 <select
                                                     value={formData.appliance}
@@ -373,11 +373,11 @@ export default function ContactSection() {
 
                                             <div className="space-y-2">
                                                 <label className="text-xs font-bold text-[#0B1E36] uppercase tracking-wide flex items-center gap-1.5">
-                                                    <Building2 className="w-3.5 h-3.5 text-[#0284C7]" /> Appliance Brand
+                                                    <Building2 className="w-3.5 h-3.5 text-[#0284C7]" /> {contentData.contact.formBrandLabel}
                                                 </label>
                                                 <input
                                                     type="text"
-                                                    placeholder="e.g. Miele, Bosch, Fisher & Paykel"
+                                                    placeholder={contentData.contact.formBrandPlaceholder}
                                                     value={formData.brand}
                                                     onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
                                                     className="w-full bg-[#F8FAFC] border border-slate-300 rounded-xs px-4 py-3 text-sm text-[#0B1E36] placeholder-slate-400 focus:outline-none focus:border-[#0B1E36] focus:bg-white transition-all font-medium"
@@ -387,7 +387,7 @@ export default function ContactSection() {
 
                                         <div className="space-y-2">
                                             <label className="text-xs font-bold text-[#0B1E36] uppercase tracking-wide flex items-center gap-1.5">
-                                                <Calendar className="w-3.5 h-3.5 text-[#0284C7]" /> Preferred Appointment Window
+                                                <Calendar className="w-3.5 h-3.5 text-[#0284C7]" /> {contentData.contact.formWindowLabel}
                                             </label>
                                             <select
                                                 value={formData.window}
@@ -403,11 +403,11 @@ export default function ContactSection() {
 
                                         <div className="space-y-2">
                                             <label className="text-xs font-bold text-[#0B1E36] uppercase tracking-wide flex items-center gap-1.5">
-                                                <MessageSquare className="w-3.5 h-3.5 text-[#0284C7]" /> Fault Description / Error Codes
+                                                <MessageSquare className="w-3.5 h-3.5 text-[#0284C7]" /> {contentData.contact.formDescLabel}
                                             </label>
                                             <textarea
                                                 rows={3}
-                                                placeholder="Please describe what the appliance is doing (e.g. won't spin, flashing F20 error, leaking from bottom)..."
+                                                placeholder={contentData.contact.formDescPlaceholder}
                                                 value={formData.message}
                                                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                                 className="w-full bg-[#F8FAFC] border border-slate-300 rounded-xs p-4 text-sm text-[#0B1E36] placeholder-slate-400 focus:outline-none focus:border-[#0B1E36] focus:bg-white transition-all font-medium custom-scrollbar"
@@ -420,10 +420,10 @@ export default function ContactSection() {
                                                 className="w-full py-4 bg-[#0B1E36] hover:bg-[#0284C7] text-white font-bold font-sans text-sm tracking-wider uppercase rounded-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#0B1E36]/15 scale-[1.01] hover:scale-[1.02]"
                                             >
                                                 <Send className="w-4 h-4 shrink-0" />
-                                                <span>Submit Service Request</span>
+                                                <span>{contentData.contact.formSubmitButton}</span>
                                             </button>
                                             <p className="text-[11px] text-center font-sans text-slate-500 mt-3 font-medium">
-                                                🔒 Your details are sent directly to our Melbourne dispatch desk. No third-party sharing.
+                                                {contentData.contact.formFooterNote}
                                             </p>
                                         </div>
 
@@ -442,13 +442,13 @@ export default function ContactSection() {
             <div className="relative py-20 bg-[#F8FAFC] border-t border-slate-200">
                 <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center space-y-6 max-w-2xl mx-auto relative z-10">
                     <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans leading-tight">
-                        Need Immediate{" "}
+                        {contentData.contact.emergencyTitleMain}{" "}
                         <span className="inline-block bg-[#A3E635] text-[#0F172A] px-3 py-0.5 rounded-xs shadow-2xs">
-                            Emergency Repair?
+                            {contentData.contact.emergencyTitleHighlight}
                         </span>
                     </h2>
                     <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed font-medium">
-                        Don’t wait for email confirmations. If you have an urgent refrigeration failure, major water leak, or commercial heating breakdown, call our priority dispatch line directly.
+                        {contentData.contact.emergencyDesc}
                     </p>
                     <div className="pt-2">
                         <a
@@ -456,7 +456,7 @@ export default function ContactSection() {
                             className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#0B1E36] hover:bg-[#0284C7] text-white font-bold font-sans text-sm tracking-wider uppercase rounded-sm transition-all duration-300 shadow-xl shadow-[#0B1E36]/10 scale-[1.02] hover:scale-105"
                         >
                             <PhoneCall className="w-4 h-4 fill-current shrink-0" />
-                            <span>Call Priority Line: 0405 545 609</span>
+                            <span>{contentData.contact.emergencyButton}</span>
                         </a>
                     </div>
                 </div>

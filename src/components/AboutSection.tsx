@@ -1,5 +1,5 @@
 "use client";
-
+import contentData from '../../data/content.json';
 import React from "react";
 import { motion, type Easing } from "framer-motion";
 import {
@@ -141,31 +141,31 @@ export default function AboutSection() {
                             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-white/10 border border-white/15 rounded-full">
                                 <Anchor className="w-4 h-4 text-[#38BDF8]" />
                                 <span className="text-xs font-mono font-bold tracking-widest text-[#38BDF8] uppercase">
-                                    THE CDS STORY • EST. MELBOURNE
+                                    {contentData.aboutUs.heroBadge}
                                 </span>
                             </div>
 
                             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.05] font-sans">
-                                Marine Engineering Precision. Applied to Your Home.
+                                {contentData.aboutUs.heroTitle}
                             </h1>
 
                             <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal font-sans max-w-2xl">
-                                Most appliance repair companies are generalists. We are specialists. Born from a decade of high-pressure shipboard engineering, CDS Appliance Services brings uncompromising mechanical tolerances, proprietary manufacturer tools, and absolute respect to residential and commercial HVAC across Melbourne.
+                                {contentData.aboutUs.heroDesc}
                             </p>
 
                             {/* Telemetry Badge Row */}
                             <div className="pt-4 grid grid-cols-3 gap-4 border-t border-white/15 max-w-lg font-mono text-xs">
                                 <div>
-                                    <span className="text-slate-400 block">TOLERANCE SPEC</span>
-                                    <span className="text-emerald-400 font-bold">±0.01mm EXACT</span>
+                                    <span className="text-slate-400 block">{contentData.aboutUs.telemetry1Label}</span>
+                                    <span className="text-emerald-400 font-bold">{contentData.aboutUs.telemetry1Value}</span>
                                 </div>
                                 <div>
-                                    <span className="text-slate-400 block">DIAGNOSTIC APPARATUS</span>
-                                    <span className="text-[#38BDF8] font-bold">100% DIGITAL TRACE</span>
+                                    <span className="text-slate-400 block">{contentData.aboutUs.telemetry2Label}</span>
+                                    <span className="text-[#38BDF8] font-bold">{contentData.aboutUs.telemetry2Value}</span>
                                 </div>
                                 <div>
-                                    <span className="text-slate-400 block">WARRANTY BACKING</span>
-                                    <span className="text-white font-bold">2-YEAR VBA SEAL</span>
+                                    <span className="text-slate-400 block">{contentData.aboutUs.telemetry3Label}</span>
+                                    <span className="text-white font-bold">{contentData.aboutUs.telemetry3Value}</span>
                                 </div>
                             </div>
                         </motion.div>
@@ -182,11 +182,11 @@ export default function AboutSection() {
 
                                 {/* HUD Corner Markers */}
                                 <div className="absolute top-2 left-2 text-[9px] font-mono font-bold text-white/60 uppercase tracking-widest z-20">
-                                    REF: MARINE-HVAC // 2026
+                                    {contentData.aboutUs.hudRef}
                                 </div>
                                 <div className="absolute bottom-2 right-2 text-[9px] font-mono font-bold text-[#38BDF8] uppercase tracking-widest z-20 flex items-center gap-1.5">
                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                                    SYSTEM ACTIVE
+                                    {contentData.aboutUs.hudStatus}
                                 </div>
 
                                 <div className="relative w-full h-full rounded-sm overflow-hidden bg-slate-900">
@@ -204,10 +204,10 @@ export default function AboutSection() {
                                 <div className="absolute bottom-6 left-6 z-20 bg-[#0B1E36]/95 backdrop-blur-md border border-white/20 p-3.5 rounded-sm shadow-xl max-w-[220px]">
                                     <div className="flex items-center gap-2 text-[#38BDF8] font-mono text-[10px] font-bold uppercase mb-1">
                                         <Gauge className="w-3.5 h-3.5" />
-                                        THERMAL COP TRACE
+                                        {contentData.aboutUs.floatingBoxTitle}
                                     </div>
                                     <div className="text-white font-sans text-sm font-black leading-tight">
-                                        Calibrated Logic Diagnostics
+                                        {contentData.aboutUs.floatingBoxDesc}
                                     </div>
                                 </div>
 
@@ -222,10 +222,10 @@ export default function AboutSection() {
             <div className="py-24 sm:py-32 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
                 <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
                     <span className="text-xs font-mono font-bold tracking-[0.2em] uppercase text-[#0284C7] block mb-2">
-                        CORE PHILOSOPHY
+                        {contentData.aboutUs.pillarsBadge}
                     </span>
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-[#0B1E36] uppercase font-sans">
-                        How We Stand Apart.
+                        {contentData.aboutUs.pillarsTitle}
                     </h2>
                     <div className="w-12 h-1 bg-[#0284C7] mx-auto mt-4" />
                 </div>
@@ -264,7 +264,7 @@ export default function AboutSection() {
                             </div>
 
                             <div className="mt-8 pt-4 border-t border-slate-200/60 flex items-center justify-between text-xs font-mono font-bold text-slate-400 group-hover:text-[#0B1E36] transition-colors">
-                                <span>VERIFIED STANDARD</span>
+                                <span>{contentData.aboutUs.pillarsVerified}</span>
                                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                             </div>
                         </motion.div>
@@ -279,14 +279,14 @@ export default function AboutSection() {
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                         <div>
                             <span className="text-xs font-mono font-bold tracking-[0.2em] uppercase text-[#38BDF8] block mb-2">
-                                PRECISION IN ACTION
+                                {contentData.aboutUs.showcaseBadge}
                             </span>
                             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white uppercase font-sans">
-                                Laboratory Standards. Field Execution.
+                                {contentData.aboutUs.showcaseTitle}
                             </h2>
                         </div>
                         <div className="font-mono text-xs text-slate-300 max-w-sm">
-                            We operate Melbourne&apos;s most rigorously equipped mobile workshops, carrying OEM factory components for immediate mechanical resolution.
+                            {contentData.aboutUs.showcaseDesc}
                         </div>
                     </div>
 
@@ -302,8 +302,8 @@ export default function AboutSection() {
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E36] via-transparent to-transparent opacity-90" />
                             <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10">
                                 <div>
-                                    <span className="font-mono text-[10px] text-[#38BDF8] font-bold block">PROTOCOL 01</span>
-                                    <h4 className="text-lg font-black text-white font-sans uppercase">LOGIC BOARD CALIBRATION</h4>
+                                    <span className="font-mono text-[10px] text-[#38BDF8] font-bold block">{contentData.aboutUs.protocol1Label}</span>
+                                    <h4 className="text-lg font-black text-white font-sans uppercase">{contentData.aboutUs.protocol1Title}</h4>
                                 </div>
                                 <Sliders className="w-5 h-5 text-[#38BDF8]" />
                             </div>
@@ -319,8 +319,8 @@ export default function AboutSection() {
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E36] via-transparent to-transparent opacity-90" />
                             <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10">
                                 <div>
-                                    <span className="font-mono text-[10px] text-[#38BDF8] font-bold block">PROTOCOL 02</span>
-                                    <h4 className="text-lg font-black text-white font-sans uppercase">PRESSURIZED GAS TRACING</h4>
+                                    <span className="font-mono text-[10px] text-[#38BDF8] font-bold block">{contentData.aboutUs.protocol2Label}</span>
+                                    <h4 className="text-lg font-black text-white font-sans uppercase">{contentData.aboutUs.protocol2Title}</h4>
                                 </div>
                                 <Cpu className="w-5 h-5 text-[#38BDF8]" />
                             </div>
@@ -338,14 +338,14 @@ export default function AboutSection() {
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                         <div>
                             <span className="text-xs font-mono font-bold tracking-[0.2em] uppercase text-[#0284C7] block mb-2">
-                                PERSONNEL DIRECTORY
+                                {contentData.aboutUs.teamBadge}
                             </span>
                             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-[#0B1E36] uppercase font-sans">
-                                The Master Technicians.
+                                {contentData.aboutUs.teamTitle}
                             </h2>
                         </div>
                         <p className="text-sm sm:text-base text-slate-600 max-w-md font-medium font-sans">
-                            Factory-trained, fully licensed, and equipped with advanced digital diagnostics. Meet the team restoring Melbourne&apos;s premium appliances.
+                            {contentData.aboutUs.teamDesc}
                         </p>
                     </div>
 
@@ -411,17 +411,17 @@ export default function AboutSection() {
                         <div className="space-y-2">
                             <div className="inline-flex items-center gap-2 text-[#38BDF8] font-mono text-xs font-bold tracking-widest uppercase">
                                 <FileText className="w-4 h-4" />
-                                OFFICIAL REGISTRATION &amp; COMPLIANCE
+                                {contentData.aboutUs.complianceBadge}
                             </div>
                             <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white uppercase font-sans">
-                                Fully Accredited. Fully Insured.
+                                {contentData.aboutUs.complianceTitle}
                             </h3>
                         </div>
                         <div className="bg-[#071324] border border-white/15 px-6 py-4 rounded-sm flex items-center gap-4">
                             <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
                             <div className="font-mono text-xs">
-                                <span className="text-slate-400 block">VICTORIAN WORKFLOW REGISTRY</span>
-                                <span className="text-white font-bold">ALL LICENSES ACTIVE &amp; VERIFIED ({new Date().getFullYear()})</span>
+                                <span className="text-slate-400 block">{contentData.aboutUs.registryLabel}</span>
+                                <span className="text-white font-bold">{contentData.aboutUs.registryStatus} ({new Date().getFullYear()})</span>
                             </div>
                         </div>
                     </div>

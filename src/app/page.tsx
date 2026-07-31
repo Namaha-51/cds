@@ -5,7 +5,6 @@ import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import PartnersMarquee from "@/components/PartnersMarquee";
-import SeasonalFeature from "@/components/SeasonalFeature";
 import ServicesExplorer from "@/components/ServicesExplorer";
 import WhyPremium from "@/components/WhyPremium";
 import TimelineProcess from "@/components/TimelineProcess";
@@ -17,17 +16,16 @@ export default function Home() {
   const [loadingComplete, setLoadingComplete] = useState(false);
 
   return (
-    <>
+    <div className="relative min-h-screen bg-white flex flex-col">
       {/* Dynamic SVG Preloader */}
-      <Loader onComplete={() => setLoadingComplete(true)} />
+      {!loadingComplete && <Loader onComplete={() => setLoadingComplete(true)} />}
 
       {/* Main content renders seamlessly only after preload completion */}
       {loadingComplete && (
-        <main className="min-h-screen bg-white">
+        <main className="w-full flex-1 flex flex-col">
           <Navbar />
           <Hero />
           <PartnersMarquee />
-          <SeasonalFeature />
           <ServicesExplorer />
           <WhyPremium />
           <TimelineProcess />
@@ -36,6 +34,6 @@ export default function Home() {
           <Footer />
         </main>
       )}
-    </>
+    </div>
   );
 }

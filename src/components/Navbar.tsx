@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent, type Easing } from "framer-motion";
@@ -78,31 +79,37 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* 📍 2. MAIN NAVIGATION BAR (Edge-to-Edge Spacing, Single-Line No Wrapping) */}
+      {/* 📍 2. MAIN NAVIGATION BAR (Enlarged Height: h-28) */}
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: isHidden ? -100 : 0 }}
         transition={{ duration: 0.5, ease: easeQuint }}
-        className="w-full h-24 flex items-center transition-all duration-300 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 shadow-sm"
+        className="w-full h-28 flex items-center transition-all duration-300 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 shadow-sm"
       >
-        <div className="max-w-[1440px] mx-auto w-full px-6 sm:px-10 lg:px-16 flex items-center justify-between gap-4">
+        <div className="max-w-[1440px] mx-auto w-full px-6 sm:px-10 lg:px-16 flex items-center justify-between gap-6">
 
-          {/* Brand Logo (Far Left) */}
-          <Link href="/" className="flex items-center gap-3.5 cursor-pointer group shrink-0 min-w-max">
-            <div className="w-10 h-10 bg-[#0B1E36] group-hover:bg-[#0284C7] transition-colors flex items-center justify-center rounded-sm shadow-2xs shrink-0">
-              <span className="text-white font-black tracking-tighter text-sm font-sans">CDS</span>
+          {/* Brand Logo (Enlarged to w-20 h-20 with spacious gap) */}
+          <Link href="/" className="flex items-center gap-6 cursor-pointer group shrink-0 min-w-max mr-4">
+            <div className="relative w-20 h-20 flex items-center justify-center shrink-0">
+              <Image
+                src="/logos/logo.png"
+                alt="CDS Appliance Services Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             <div>
-              <span className="block font-black text-sm tracking-tight text-[#0B1E36] uppercase font-sans leading-none">
-                CDS APPLIANCE
+              <span className="block font-black text-lg sm:text-xl tracking-tight text-[#0B1E36] uppercase font-sans leading-none">
+                CDS Appliance
               </span>
-              <span className="block text-[10px] text-[#0284C7] font-bold tracking-widest uppercase font-mono mt-0.5">
-                ENGINEERING &amp; HVAC
+              <span className="block text-xs text-[#0284C7] font-bold tracking-widest uppercase font-mono mt-1.5">
+                Engineering &amp; HVAC
               </span>
             </div>
           </Link>
 
-          {/* Central Navigation Links (Generous Padding, Single-Line No Wrapping) */}
+          {/* Central Navigation Links */}
           <div className="hidden lg:flex items-center justify-center gap-3 xl:gap-5 flex-1 px-4">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href));
@@ -111,10 +118,11 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-5 py-3 text-xs xl:text-sm font-sans font-extrabold tracking-wide uppercase cursor-pointer rounded-sm transition-all duration-200 whitespace-nowrap ${isActive
+                  className={`px-5 py-3 text-xs xl:text-sm font-sans font-extrabold tracking-wide uppercase cursor-pointer rounded-sm transition-all duration-200 whitespace-nowrap ${
+                    isActive
                       ? "bg-[#0B1E36] text-white shadow-xs"
                       : "text-[#1E293B] hover:bg-[#F0F9FF] hover:text-[#0284C7]"
-                    }`}
+                  }`}
                 >
                   {link.name}
                 </Link>
