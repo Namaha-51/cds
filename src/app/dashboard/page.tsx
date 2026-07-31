@@ -13,10 +13,9 @@ export default function Dashboard() {
     fetch("/api/content")
       .then((res) => res.json())
       .then((data) => {
-        const parsed = data.content || data;
-        if (parsed && typeof parsed === "object") {
-          setContent(parsed);
-          const keys = Object.keys(parsed);
+        if (data && !data.error) {
+          setContent(data);
+          const keys = Object.keys(data);
           if (keys.length > 0) setActiveTab(keys[0]);
         }
         setLoading(false);
@@ -47,7 +46,8 @@ export default function Dashboard() {
         body: JSON.stringify(content),
       });
       const result = await res.json();
-      if (res.ok) {
+      
+      if (res.ok && result.success) {
         setMessage("Successfully pushed to live!");
       } else {
         setMessage("Error saving: " + (result.error || "Unknown error"));
@@ -62,7 +62,7 @@ export default function Dashboard() {
     return <div className="p-10 font-mono">Loading dashboard telemetry...</div>;
   }
 
-  if (!content || typeof content !== "object") {
+  if (!content) {
     return <div className="p-10 font-mono text-red-500">Error loading content structure.</div>;
   }
 
@@ -77,7 +77,11 @@ export default function Dashboard() {
             <p className="text-sm text-gray-500 mt-1">Manage live website copy stored in Supabase</p>
           </div>
           <div className="flex items-center gap-4">
-            {message && <span className="text-sm font-medium text-green-600">{message}</span>}
+            {message && (
+              <span className={`text-sm font-medium ${message.includes("Error") ? "text-red-600" : "text-green-600"}`}>
+                {message}
+              </span>
+            )}
             <button
               onClick={handleSave}
               disabled={saving}
@@ -88,7 +92,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Section Navigation Tabs */}
         <div className="flex flex-wrap gap-2 mb-8 pb-4 border-b border-gray-100">
           {sections.map((sectionKey) => (
             <button
@@ -105,7 +108,6 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* Fields Editor */}
         {activeTab && content[activeTab] && (
           <div className="space-y-6">
             <h2 className="text-lg font-semibold text-gray-800 capitalize border-b pb-2">

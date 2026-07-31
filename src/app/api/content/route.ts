@@ -1,80 +1,66 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
-const DEFAULT_CONTENT = {
-  home: {
-    heroEyebrow: "Est. Melbourne - Licenced HVAC & Appliance Technicians",
-    heroTitle: "Melbourne’s Premium Appliance & Air Conditioning Specialists",
-    heroDesc: "Manufacturer authorised technicians with hands-on experience, servicing and installing residential & commercial air conditioning systems and appliances",
-  },
-  aboutUs: {
-    heroBadge: "THE CDS STORY • EST. MELBOURNE",
-    heroTitle: "Marine Engineering Precision. Applied to Your Home.",
-  },
-  contact: {
-    heroBadge: "EST. MELBOURNE • DIRECT CLIENT LIAISON",
-    heroTitleMain: "Contact Our",
-  },
-  serviceAreas: {
-    heroBadge: "GREATER MELBOURNE COVERAGE DIRECTORY",
-    heroTitleMain: "Appliance Repairs Across",
-  },
-  propertyManagement: {
-    heroBadge: "MELBOURNE REAL ESTATE PARTNERSHIPS",
-    heroTitleMain: "Melbourne's Property Maintenance Specialists",
-  }
-};
-
 export async function GET() {
   try {
-    const { data, error } = await supabase
-      .from("site_content")
-      .select("*")
-      .limit(1)
-      .single();
+    // 1. Fetch all rows from the database
+    const { data, error } = await supabase.from("site_content").select("section, content");
 
-    if (error || !data) {
-      return NextResponse.json(DEFAULT_CONTENT);
+    if (error) throw error;
+
+    // 2. Combine them into one object for your dashboard tabs
+    const combinedContent: Record<string, any> = {};
+    
+    if (data) {
+      data.forEach((row) => {
+        let parsed = row.content;
+        if (typeof parsed === 'string') {
+          try { parsed = JSON.parse(parsed); } catch (e) {}
+        }
+        
+        // Handle if the data got double-nested previously
+        if (parsed && parsed[row.section]) {
+          combinedContent[row.section] = parsed[row.section];
+        } else {
+          combinedContent[row.section] = parsed || {};
+        }
+      });
     }
 
-    let contentObj = data.content;
-    if (typeof contentObj === "string") {
-      try {
-        contentObj = JSON.parse(contentObj);
-      } catch (e) {
-        contentObj = DEFAULT_CONTENT;
-      }
-    }
-
-    if (!contentObj || typeof contentObj !== "object" || Array.isArray(contentObj) || Object.keys(contentObj).length === 0) {
-      contentObj = DEFAULT_CONTENT;
-    }
-
-    return NextResponse.json(contentObj);
+    return NextResponse.json(combinedContent);
   } catch (err: any) {
-    return NextResponse.json(DEFAULT_CONTENT);
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const body = await request.json(); // The full object from your dashboard
 
-    const { data: allRows } = await supabase.from("site_content").select("id").limit(1);
-
-    if (allRows && allRows.length > 0) {
-      const { error } = await supabase
+    // Loop through each tab (home, aboutUs, etc.) and save it properly
+    for (const [sectionName, sectionData] of Object.entries(body)) {
+      
+      // Check if the row exists
+      const { data: existingRow } = await supabase
         .from("site_content")
-        .update({ content: body })
-        .eq("id", allRows[0].id);
+        .select("section")
+        .eq("section", sectionName)
+        .single();
 
-      if (error) throw error;
-    } else {
-      const { error } = await supabase
-        .from("site_content")
-        .insert([{ content: body }]);
-
-      if (error) throw error;
+      if (existingRow) {
+        // Update existing row
+        const { error } = await supabase
+          .from("site_content")
+          .update({ content: sectionData })
+          .eq("section", sectionName);
+        if (error) throw error;
+      } else {
+        // Insert new row WITH the required 'section' column
+        const { error } = await supabase
+          .from("site_content")
+          .insert([{ section: sectionName, content: sectionData }]);
+        if (error) throw error;
+      }
     }
 
     return NextResponse.json({ success: true });
