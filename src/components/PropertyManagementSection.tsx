@@ -1,5 +1,5 @@
 "use client";
-import contentData from '../../data/content.json';
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -79,7 +79,7 @@ const DIFFERENCES = [
 const REA_SERVICES = [
     {
         title: "Smoke Alarm Replacements",
-        desc: "Ensure compliance with Victorian rental safety regulations with expert testing, photoelectric installation, and compliance certificates.",
+        desc: "Ensure compliance with Victorian rental safety regulations with expert testing, installation, and compliance certificates.",
         tag: "COMPLIANCE",
         tagBg: "bg-[#A7F3D0]",
         image: "/tech-smoke-alarm.png", // Or generic fallback
@@ -124,25 +124,41 @@ export default function PropertyManagementSection() {
                 <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-                        <motion.div custom={0} initial="hidden" animate="visible" variants={fadeUp} className="lg:col-span-8 space-y-6">
+                        {/* Left Column: Narrative Copy */}
+                        <motion.div custom={0} initial="hidden" animate="visible" variants={fadeUp} className="lg:col-span-7 space-y-6">
 
                             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-white/10 border border-white/15 rounded-full backdrop-blur-md">
                                 <Building2 className="w-3.5 h-3.5 text-[#38BDF8]" />
                                 <span className="text-xs font-mono font-bold tracking-widest text-[#38BDF8] uppercase">
-                                    {contentData.propertyManagement.heroBadge}
+                                    REAL ESTATE PARTNERSHIPS
                                 </span>
                             </div>
 
                             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white uppercase font-sans leading-[1.08]">
-                                {contentData.propertyManagement.heroTitleMain}{" "}
+                                Melbourne's Property Maintenance{" "}
                                 <span className="inline-block bg-[#38BDF8] text-[#071324] px-3 py-1 font-black rounded-xs shadow-md mt-1">
-                                    {contentData.propertyManagement.heroTitleHighlight}
+                                    Specialists
                                 </span>
                             </h1>
 
                             <p className="text-base sm:text-lg text-slate-300 font-normal font-sans leading-relaxed max-w-2xl">
-                                {contentData.propertyManagement.heroDesc}
+                                Streamlined maintenance workflows designed to minimize administrative friction for property managers and ensure tenant satisfaction.
                             </p>
+                        </motion.div>
+
+                        {/* Right Column: Small Compact Image Box */}
+                        <motion.div custom={1} initial="hidden" animate="visible" variants={fadeUp} className="lg:col-span-5 flex justify-center lg:justify-end">
+                            <div className="relative aspect-square w-full max-w-[260px] sm:max-w-[300px] lg:max-w-[320px] rounded-sm overflow-hidden border-2 border-white/15 shadow-2xl bg-[#071324] p-2.5 group">
+                                <div className="relative w-full h-full rounded-sm overflow-hidden bg-slate-900">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop"
+                                        alt="Master Technician operating precision diagnostic apparatus"
+                                        className="absolute inset-0 w-full h-full object-cover object-center transform transition-transform duration-1000 group-hover:scale-105 filter contrast-[1.05]"
+                                    />
+                                    {/* Subtle Gradient Overlay for integration */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E36]/60 via-transparent to-transparent pointer-events-none" />
+                                </div>
+                            </div>
                         </motion.div>
 
                     </div>
@@ -162,23 +178,23 @@ export default function PropertyManagementSection() {
 
                         <motion.div custom={1} initial="hidden" animate="visible" variants={fadeUp} className="lg:col-span-7 space-y-6">
                             <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block">
-                                {contentData.propertyManagement.solutionsBadge}
+                                OPERATIONAL EFFICIENCY
                             </span>
                             <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans leading-tight">
-                                {contentData.propertyManagement.solutionsTitleMain}{" "}
+                                Engineered For{" "}
                                 <span className="inline-block bg-[#FEF08A] text-[#0B1E36] px-2 py-0.5 rounded-xs">
-                                    {contentData.propertyManagement.solutionsTitleHighlight}
+                                    Property Portfolios
                                 </span>
                             </h2>
                             <div className="space-y-4 text-sm sm:text-base text-slate-600 font-sans leading-relaxed">
                                 <p>
-                                    {contentData.propertyManagement.solutionsDesc1}
+                                    Managing rental portfolios requires reliable tradespeople who communicate clearly, respect boundaries, and provide accurate reports without unnecessary delays.
                                 </p>
                                 <div className="p-4 bg-[#F8FAFC] border-l-4 border-[#0B1E36] rounded-r-sm font-bold text-[#0B1E36]">
-                                    {contentData.propertyManagement.solutionsHighlightPrefix} <span className="text-[#0284C7]">{contentData.propertyManagement.solutionsHighlightText}</span>
+                                    Core focus: <span className="text-[#0284C7]">Eliminating landlord headaches and reducing tenant downtime.</span>
                                 </div>
                                 <p>
-                                    {contentData.propertyManagement.solutionsDesc2}
+                                    From routine appliance replacements to urgent repairs, CDS operates as an extension of your property management team.
                                 </p>
                             </div>
                         </motion.div>
@@ -187,7 +203,7 @@ export default function PropertyManagementSection() {
                         <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp} className="lg:col-span-5">
                             <div className="relative aspect-[4/3] rounded-sm overflow-hidden border-2 border-slate-300 bg-white p-3 shadow-2xl group">
                                 <div className="absolute top-2 left-2 text-[9px] font-mono font-bold text-slate-500 uppercase tracking-widest z-20">
-                                    {contentData.propertyManagement.solutionsImgRef}
+                                    SYS_REF: REA-04 // COMMERCIAL
                                 </div>
                                 <div className="relative w-full h-full rounded-sm overflow-hidden bg-slate-100">
                                     <Image
@@ -221,12 +237,12 @@ export default function PropertyManagementSection() {
 
                     <div className="text-center max-w-2xl mx-auto mb-16">
                         <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block mb-2">
-                            {contentData.propertyManagement.advantageBadge}
+                            PARTNERSHIP BENEFITS
                         </span>
                         <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                            {contentData.propertyManagement.advantageTitleMain}{" "}
+                            Why Property Managers{" "}
                             <span className="inline-block bg-[#A3E635] text-[#0F172A] px-3 py-0.5 rounded-xs shadow-2xs">
-                                {contentData.propertyManagement.advantageTitleHighlight}
+                                Choose CDS
                             </span>
                         </h2>
                     </div>
@@ -266,16 +282,16 @@ export default function PropertyManagementSection() {
 
                         <div className="lg:col-span-6 space-y-6">
                             <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block">
-                                {contentData.propertyManagement.diffBadge}
+                                SERVICE DIFFERENTIATORS
                             </span>
                             <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                                {contentData.propertyManagement.diffTitleMain}{" "}
+                                The CDS{" "}
                                 <span className="inline-block bg-[#DDD6FE] text-[#0B1E36] px-3 py-0.5 rounded-xs">
-                                    {contentData.propertyManagement.diffTitleHighlight}
+                                    Commitment
                                 </span>
                             </h2>
                             <p className="text-sm text-slate-600 font-sans leading-relaxed">
-                                {contentData.propertyManagement.diffDesc}
+                                We hold ourselves to strict corporate SLA metrics so your agency maintains its reputation for excellence.
                             </p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                                 {DIFFERENCES.map((diff, i) => (
@@ -291,13 +307,13 @@ export default function PropertyManagementSection() {
                         <div className="lg:col-span-6 bg-[#0B1E36] text-white p-8 sm:p-10 rounded-sm shadow-xl space-y-6">
                             <div className="flex items-center gap-2 text-[#38BDF8] font-mono text-xs font-bold tracking-widest uppercase">
                                 <ShieldCheck className="w-5 h-5" />
-                                {contentData.propertyManagement.accBadge}
+                                
                             </div>
                             <h3 className="text-2xl font-black font-sans uppercase">
-                                {contentData.propertyManagement.accTitle}
+                                Certified & Fully Insured Trade Partner
                             </h3>
                             <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
-                                {contentData.propertyManagement.accDesc}
+                                Every job is backed by formal Victorian electrical and refrigeration credentials, ensuring complete peace of mind for landlords.
                             </p>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-white/10 text-center font-mono text-xs">
                                 <div className="p-3 bg-white/5 border border-white/10 rounded-xs">
@@ -340,12 +356,12 @@ export default function PropertyManagementSection() {
 
                     <div className="text-center max-w-2xl mx-auto mb-16">
                         <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block mb-2">
-                            {contentData.propertyManagement.tradesBadge}
+                            ADDITIONAL TRADES
                         </span>
                         <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                            {contentData.propertyManagement.tradesTitleMain}{" "}
+                            Essential Portfolio{" "}
                             <span className="inline-block bg-[#BAE6FD] text-[#0B1E36] px-3 py-0.5 rounded-xs">
-                                {contentData.propertyManagement.tradesTitleHighlight}
+                                Services
                             </span>
                         </h2>
                     </div>
@@ -366,7 +382,7 @@ export default function PropertyManagementSection() {
                                 </div>
                                 <div className="px-6 pb-6 pt-2">
                                     <Link href="/contact" className="inline-flex items-center gap-2 text-xs font-bold text-[#0B1E36] hover:text-[#0284C7] uppercase font-sans tracking-wide">
-                                        <span>{contentData.propertyManagement.tradesBookButton}</span>
+                                        <span>Enquire Now →</span>
                                         <ArrowRight className="w-3.5 h-3.5" />
                                     </Link>
                                 </div>
@@ -383,12 +399,12 @@ export default function PropertyManagementSection() {
 
                     <div>
                         <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#0284C7] uppercase block mb-2">
-                            {contentData.propertyManagement.partnersBadge}
+                            AGENCY NETWORK
                         </span>
                         <h2 className="text-3xl sm:text-4xl font-black text-[#0B1E36] uppercase tracking-tight font-sans">
-                            {contentData.propertyManagement.partnersTitleMain}{" "}
+                            Trusted By Leading{" "}
                             <span className="inline-block bg-[#FEF08A] text-[#0B1E36] px-3 py-0.5 rounded-xs">
-                                {contentData.propertyManagement.partnersTitleHighlight}
+                                Agencies
                             </span>
                         </h2>
                     </div>
@@ -412,18 +428,18 @@ export default function PropertyManagementSection() {
                 <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center space-y-6 max-w-2xl mx-auto relative z-10">
 
                     <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#38BDF8] uppercase block">
-                        {contentData.propertyManagement.ctaBadge}
+                        PORTFOLIO INTEGRATION
                     </span>
 
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight font-sans leading-tight">
-                        {contentData.propertyManagement.ctaTitleMain1}{" "}
+                        Ready to streamline your agency's{" "}
                         <span className="inline-block bg-[#A3E635] text-[#0F172A] px-3 py-1 rounded-xs">
-                            {contentData.propertyManagement.ctaTitleHighlight}
+                            Maintenance Workflow?
                         </span>
                     </h2>
 
                     <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed font-medium">
-                        {contentData.propertyManagement.ctaDesc}
+                        Discuss your rental portfolio requirements with our dedicated property management liaison team today.
                     </p>
 
                     <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -432,20 +448,20 @@ export default function PropertyManagementSection() {
                             className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#38BDF8] hover:bg-white text-[#071324] font-black font-sans text-sm tracking-wider uppercase rounded-sm transition-all duration-300 shadow-xl"
                         >
                             <PhoneCall className="w-4 h-4 fill-current shrink-0" />
-                            <span>{contentData.propertyManagement.ctaButton1}</span>
+                            <span>Chris at CDS: 0405 545 609</span>
                         </a>
 
                         <Link
                             href="/contact"
                             className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold font-sans text-sm tracking-wider uppercase rounded-sm transition-all duration-300"
                         >
-                            <span>{contentData.propertyManagement.ctaButton2}</span>
+                            <span>Contact Support</span>
                             <ArrowRight className="w-4 h-4" />
                         </Link>
                     </div>
 
                     <div className="text-xs font-mono text-slate-400 pt-4">
-                        {contentData.propertyManagement.ctaEmailLabel} <a href={`mailto:${contentData.propertyManagement.ctaEmailAddress}`} className="text-[#38BDF8] underline">{contentData.propertyManagement.ctaEmailAddress}</a>
+                        Direct Email Enquiries: <a href="mailto:info@cdsapplianceservices.com.au" className="text-[#38BDF8] underline">info@cdsapplianceservices.com.au</a>
                     </div>
 
                 </div>
